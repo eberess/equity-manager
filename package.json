@@ -1,0 +1,16 @@
+{
+  "name": "equity-manager",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Equity Manager - Corporate Shareholding Platform",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "test": "turbo run test"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=8.0.0"
+  }
+}
