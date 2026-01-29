@@ -2,7 +2,6 @@
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
 
-// On définit une interface pour le typage (Critère "TypeScript Confirmé")
 interface User {
   _id: string;
   firstName: string;
@@ -15,7 +14,6 @@ const loading = ref(true)
 
 onMounted(async () => {
   try {
-    // Appel vers ton UsersController
     const response = await axios.get(`${import.meta.env.VITE_API_URL}/users`)
     users.value = response.data
   } catch (error) {
@@ -28,7 +26,7 @@ onMounted(async () => {
 
 <template>
   <div style="padding: 2rem; font-family: sans-serif;">
-    <h1>Actionnaires ADEO</h1>
+    <h1>Equity Manager</h1>
     
     <div v-if="loading">Chargement...</div>
     
