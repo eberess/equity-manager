@@ -14,9 +14,10 @@ Equity Manager is a comprehensive enterprise application designed to manage comp
 - **JWT Authentication** with role-based access control (Admin/Editor/Viewer)
 - **Analytics Dashboard** with interactive charts and statistics
 - **Full CRUD Operations** with validation and error handling
+- **Audit Trail System** - Complete history of all modifications
 - **API Documentation** with Swagger/OpenAPI
 - **E2E Testing** with Cypress (100% pass rate)
-- **AD Design System** integration
+- **ADEO Design System** integration
 - **International context** ready
 
 ## Architecture & Tech Stack
@@ -137,6 +138,16 @@ pnpm exec cypress open # Interactive
 - Detailed breakdown by business unit
 - Percentage calculations
 
+### Audit Trail System
+- Complete history of all modifications
+- Track CREATE, UPDATE, DELETE operations
+- Record user information (who, when)
+- Store old and new values for changes
+- Admin-only access to audit logs
+- Detailed change history with expandable details
+- Color-coded actions for easy identification
+- Real-time audit log display in dashboard
+
 ### API Documentation
 - Swagger/OpenAPI 3.0 specification
 - Interactive API testing
@@ -189,6 +200,10 @@ pnpm exec cypress open # Interactive
 - `POST /users` - Create shareholder (Admin/Editor)
 - `PUT /users/:id` - Update shareholder (Admin/Editor)
 - `DELETE /users/:id` - Delete shareholder (Admin only)
+
+### Audit
+- `GET /audit` - Get all audit logs (Admin only)
+- `GET /audit/entity/:entityId` - Get audit logs for specific entity (Admin/Editor)
 
 ### Utilities
 - `GET /users/seed/init` - Seed test users
@@ -303,7 +318,7 @@ docker-compose -f docker-compose.prod.yml up -d
 ## Future Enhancements
 
 ### Planned Features
-- [ ] **Audit Trail** - Complete history of all modifications
+- [X] **Audit Trail** - Complete history of all modifications
 - [ ] **Share Transactions** - Transfer shares between shareholders
 - [ ] **Export to CSV/PDF** - Download reports
 - [ ] **Real-time Notifications** - WebSocket integration
