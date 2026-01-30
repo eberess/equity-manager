@@ -62,8 +62,8 @@ export class UsersController {
   @ApiOperation({ summary: 'Create a new shareholder (Admin/Editor only)' })
   @ApiResponse({ status: 201, description: 'Shareholder created' })
   @ApiResponse({ status: 403, description: 'Forbidden' })
-  async create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  async create(@Body() createUserDto: CreateUserDto, @Request() req) {
+    return this.usersService.create(createUserDto, req.user);
   }
 
   @Get('test-auth')
@@ -100,8 +100,8 @@ export class UsersController {
   @ApiOperation({ summary: 'Update shareholder (Admin/Editor only)' })
   @ApiResponse({ status: 200, description: 'Shareholder updated' })
   @ApiResponse({ status: 403, description: 'Forbidden' })
-  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(id, updateUserDto);
+  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto, @Request() req) {
+    return this.usersService.update(id, updateUserDto, req.user);
   }
 
   @Delete(':id')
@@ -111,7 +111,7 @@ export class UsersController {
   @ApiOperation({ summary: 'Delete shareholder (Admin only)' })
   @ApiResponse({ status: 200, description: 'Shareholder deleted' })
   @ApiResponse({ status: 403, description: 'Forbidden' })
-  async delete(@Param('id') id: string) {
-    return this.usersService.delete(id);
+  async delete(@Param('id') id: string, @Request() req) {
+    return this.usersService.delete(id, req.user);
   }
 }

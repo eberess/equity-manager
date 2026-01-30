@@ -76,6 +76,9 @@
         </tbody>
       </table>
     </div>
+
+    <!-- Audit Trail (Admin only) -->
+    <AuditTrail v-if="isAdmin" />
   </div>
 </template>
 
@@ -83,6 +86,7 @@
 import { computed } from 'vue'
 import { Pie, Bar } from 'vue-chartjs'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title } from 'chart.js'
+import AuditTrail from './AuditTrail.vue'
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title)
 
@@ -97,6 +101,7 @@ interface User {
 
 const props = defineProps<{
   users: User[]
+  isAdmin?: boolean
 }>()
 
 const stats = computed(() => {

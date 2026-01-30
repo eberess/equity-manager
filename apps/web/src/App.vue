@@ -136,7 +136,7 @@
       </div>
 
       <!-- Dashboard Tab -->
-      <Dashboard v-if="currentTab === 'dashboard'" :users="users" />
+      <Dashboard v-if="currentTab === 'dashboard'" :users="users" :isAdmin="currentUser?.role === 'admin'" />
 
       <!-- List Tab -->
       <div v-else-if="currentTab === 'list'">
