@@ -17,7 +17,7 @@ Equity Manager is a comprehensive enterprise application designed to manage comp
 - **Audit Trail System** - Complete history of all modifications
 - **API Documentation** with Swagger/OpenAPI
 - **E2E Testing** with Cypress (100% pass rate)
-- **ADEO Design System** integration
+- **AD Design System** integration
 - **International context** ready
 
 ## Architecture & Tech Stack
@@ -35,7 +35,7 @@ Equity Manager is a comprehensive enterprise application designed to manage comp
 - **Build Tool:** Vite 7+
 - **HTTP Client:** Axios
 - **Charts:** Chart.js + vue-chartjs
-- **Styling:** Tailwind CSS with ADEO design tokens
+- **Styling:** Tailwind CSS with AD design tokens
 - **State Management:** Vue Composition API with refs
 
 ### **Testing & Quality**
