@@ -140,9 +140,10 @@
 
       <!-- List Tab -->
       <div v-else-if="currentTab === 'list'">
-        <!-- Bouton d'ajout -->
-        <div class="mb-6" v-if="canEditUsers">
+        <!-- Bouton d'ajout et export -->
+        <div class="mb-6 flex gap-4">
           <button 
+            v-if="canEditUsers"
             @click="openModal"
             class="px-6 py-3 rounded-lg text-white font-semibold shadow-md transition"
             style="background-color: #007f8c"
@@ -150,6 +151,16 @@
             @mouseout="onAddButtonOut"
           >
             + Ajouter un actionnaire
+          </button>
+          
+          <button 
+            @click="exportToCSV"
+            class="px-6 py-3 rounded-lg font-semibold shadow-md transition"
+            style="background-color: #e6e6e6; color: #191919"
+            @mouseover="onExportButtonHover"
+            @mouseout="onExportButtonOut"
+          >
+            Exporter CSV
           </button>
         </div>
 
@@ -315,6 +326,16 @@ const onDeleteButtonOut = (event: Event) => {
   if (button) button.style.backgroundColor = '#ea302d'
 }
 
+const onExportButtonHover = (event: Event) => {
+  const button = event.target as HTMLButtonElement
+  if (button) button.style.backgroundColor = '#cccccc'
+}
+
+const onExportButtonOut = (event: Event) => {
+  const button = event.target as HTMLButtonElement
+  if (button) button.style.backgroundColor = '#e6e6e6'
+}
+
 const onRowHover = (event: Event) => {
   const row = event.currentTarget as HTMLTableRowElement
   if (row) row.style.backgroundColor = '#d9f0f3'
@@ -430,6 +451,28 @@ const deleteUser = async (id: string) => {
       console.error('Erreur lors de la suppression:', error)
       alert('Erreur lors de la suppression')
     }
+  }
+}
+
+const exportToCSV = async () => {
+  try {
+    const token = localStorage.getItem('access_token')
+    const response = await axios.get('http://localhost:3000/users/export/csv', {
+      headers: { Authorization: `Bearer ${token}` },
+      responseType: 'blob',
+    })
+    
+    // Create download link
+    const url = window.URL.createObjectURL(new Blob([response.data]))
+    const link = document.createElement('a')
+    link.href = url
+    link.setAttribute('download', `shareholders-${Date.now()}.csv`)
+    document.body.appendChild(link)
+    link.click()
+    link.remove()
+  } catch (error) {
+    console.error('Erreur lors de l\'export:', error)
+    alert('Erreur lors de l\'export CSV')
   }
 }
 

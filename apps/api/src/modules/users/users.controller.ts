@@ -1,4 +1,5 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards, Request } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards, Request, Res } from '@nestjs/common';
+import type { Response } from 'express';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -71,6 +72,40 @@ export class UsersController {
   @ApiOperation({ summary: 'Test JWT authentication' })
   async testAuth(@Request() req) {
     return { message: 'JWT works!', user: req.user };
+  }
+
+  @Get('export/csv')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('JWT-auth')
+  @ApiOperation({ summary: 'Export shareholders to CSV' })
+  @ApiResponse({ status: 200, description: 'CSV file downloaded' })
+  async exportToCsv(@Res() res: Response) {
+    const users = await this.usersService.findAll();
+    
+    // Generate CSV header
+    const headers = ['First Name', 'Last Name', 'Email', 'Business Unit', 'Share Count', 'Role', 'Created At'];
+    const csvHeader = headers.join(',') + '\n';
+    
+    // Generate CSV rows
+    const csvRows = users.map(user => {
+      const userDoc = user as any;
+      return [
+        user.firstName,
+        user.lastName,
+        user.email,
+        user.businessUnit,
+        user.shareCount,
+        user.role || 'viewer',
+        userDoc.createdAt ? new Date(userDoc.createdAt).toISOString() : '',
+      ].join(',');
+    }).join('\n');
+    
+    const csv = csvHeader + csvRows;
+    
+    // Set headers for file download
+    res.setHeader('Content-Type', 'text/csv');
+    res.setHeader('Content-Disposition', `attachment; filename=shareholders-${Date.now()}.csv`);
+    res.send(csv);
   }
 
   @Get()
