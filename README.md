@@ -58,7 +58,7 @@ Equity Manager is a comprehensive enterprise application designed to manage comp
 
 ### 1. Clone & Install
 ```bash
-git clone <repository-url>
+git clone https://github.com/eberess/equity-manager.git
 cd equity-manager
 pnpm install
 ```
